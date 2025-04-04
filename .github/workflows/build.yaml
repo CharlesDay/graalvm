@@ -31,7 +31,7 @@ jobs:
         run: ./mvnw -Pnative native:compile
 
       - name: Upload native binary as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: springboot-native-image
           path: target/*
