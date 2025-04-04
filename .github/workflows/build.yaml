@@ -1,0 +1,38 @@
+name: Build Native Image
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  native-image:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21 + GraalVM
+        uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '21'
+          distribution: 'graalvm'
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Maven
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Build native image
+        run: ./mvnw -Pnative native:compile
+
+      - name: Upload native binary as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: springboot-native-image
+          path: target/*
+
