@@ -52,7 +52,15 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<enableAllSecurityServices>false</enableAllSecurityServices> <!-- Optional for reducing complexity -->
+					<buildArgs>
+						<buildArg>--no-fallback</buildArg>
+						<buildArg>-H:ConfigurationFileDirectories=/path/to/your/config</buildArg>
+					</buildArgs>
+				</configuration>
 			</plugin>
+
 		</plugins>
 	</build>
 
